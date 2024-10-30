@@ -1,7 +1,11 @@
 import PropertyCard from "@/components/PropertyCard";
-import properties from "@/properties.json";
+import { fetchProperties } from "@/utils/requests";
 
-function page() {
+export default async function Page() {
+  const data = await fetchProperties();
+  const properties = data.properties || []; // Ensure properties is always an array
+  properties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return (
     <section className="px-4 py-6">
       <div className="container-xl lg:container m-auto px-4 py-6">
@@ -18,5 +22,3 @@ function page() {
     </section>
   );
 }
-
-export default page;
